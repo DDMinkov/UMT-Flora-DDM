@@ -1,0 +1,78 @@
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Hanuman:wght@400;700&family=Roboto:wght@400;500&display=swap');
+
+:root {
+    --primary-green: #42ED13;
+    --text-dark: #1a1a1a;
+    --text-gray: #4a4a4a;
+    --transition: all 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    color: var(--text-dark);
+}
+
+h1, h2, h3 {
+    font-family: 'Hanuman', serif;
+}
+
+/* Reusable Button Styles */
+.btn-primary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(to right, #E8E81C, #42ED13, #E8E81C);
+    background-size: 200% auto; 
+    background-position: left center;
+    color: #000;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-position: right center;
+    transform: translateY(-3px);
+    filter: brightness(1.2); 
+    box-shadow: 0 10px 20px #FFFFFF, 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #ffffff;
+    color: var(--text-dark);
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 14px;
+    transition: var(--transition);
+    border: 1px solid #D9DBD9;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.05); 
+    background-color: #FFFFFF;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-color: #EEEEEE;
+}
+
+.btn-primary:active, 
+.btn-secondary:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    filter: brightness(0.9);
+    transition: all 0.1s ease;
+}
