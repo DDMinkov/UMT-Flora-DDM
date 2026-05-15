@@ -98,3 +98,25 @@
     display: flex;
     gap: 15px;
 }
+
+/* Ensure the link covers the card area without default link styling */
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Update your existing H3 selector to include the hover effect */
+.card-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    transition: var(--transition); /* Smooth color change */
+}
+
+/* Hover Animation: Text turns yellow like the header links */
+.bouquet-card:hover .card-info h3 {
+    color: #E8E81C;
+}

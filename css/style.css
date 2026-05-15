@@ -46,6 +46,7 @@ h1, h2 {
     transform: translateY(-3px);
     filter: brightness(1.2); 
     box-shadow: 0 10px 20px #FFFFFF, 0 5px 15px rgba(0,0,0,0.05);
+    color: #686D67;
 }
 
 .btn-secondary {
@@ -68,6 +69,7 @@ h1, h2 {
     background-color: #FFFFFF;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
     border-color: #EEEEEE;
+    color: #686D67;
 }
 
 .btn-primary:active, 
@@ -99,11 +101,13 @@ h1, h2 {
 }
 
 .control-btn:hover {
-    background-color: #f8f8f8;
-    border-color: #D9DBD9;
+    background-color: #D9FBCF;
+    border-color: #B9D7B0;
     transform: translateY(-2px);
 }
 
 .control-btn:active {
+    background-color: #7AF259;
+    border-color: #68D04C;
     transform: translateY(0);
 }
