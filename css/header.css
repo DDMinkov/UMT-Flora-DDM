@@ -11,7 +11,10 @@
     padding: 20px 5%;
     background: #fff;
     position: fixed;
-    width: 90%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
     z-index: 1000;
 }
 
