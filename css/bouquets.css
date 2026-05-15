@@ -1,0 +1,163 @@
+.bouquets {
+    padding: 80px 0;
+    background-color: #ffffff;
+}
+
+.bouquets .container {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 5%;
+    text-align: center; /* Center all text globally in this section */
+}
+
+.bouquets-header {
+    margin-bottom: 50px;
+}
+
+.bouquets-header h2 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.bouquets-header p {
+    color: var(--text-gray);
+    font-size: 18px;
+}
+
+/* The Grid */
+.bouquets-main-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px 20px;
+    margin-bottom: 60px;
+}
+
+.bouquet-item {
+    /* (100% - total horizontal gaps) / items per row */
+    flex: 0 0 calc((100% - 60px) / 4); 
+    display: flex;
+}
+
+.item-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%; /* Force link to fill the flex basis */
+    height: 100%;
+    /* This ensures that even if one card has less text, the card itself stays the same height */
+    justify-content: flex-start; 
+}
+
+.item-image {
+    width: 100%;
+    /* Fixed height ensures all images start at the same size */
+    height: 350px; 
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    /* Crucial: prevents portrait/landscape photos from stretching */
+    object-fit: cover; 
+    transition: transform 0.5s ease;
+}
+
+.item-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1; /* Pushes content to fill vertical space */
+    width: 100%;
+}
+
+.item-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    transition: var(--transition);
+    /* Keeps titles to one line if you want perfect symmetry, 
+       or just let them wrap naturally */
+    min-height: 1.2em; 
+}
+
+.item-info p {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    /* Increased or removed max-width so they all use the same container width */
+    max-width: 100%; 
+    /* Ensures descriptions that are shorter don't collapse the card */
+    flex-grow: 1; 
+}
+
+.item-info .price {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-dark);
+    margin-top: auto; /* Always pushes the price to the bottom of the card info */
+}
+
+/* Hover Animations */
+.bouquet-item:hover .item-image img {
+    transform: scale(1.05);
+}
+
+.bouquet-item:hover .item-info h3 {
+    color: #E8E81C;
+}
+
+.item-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.item-info p {
+    font-size: 14px;
+    color: var(--text-gray);
+    line-height: 1.6;
+    margin-bottom: 12px;
+    max-width: 280px;
+}
+
+.bouquets-action {
+    margin-top: 20px;
+}
+
+/* bouquets.css additions */
+
+.item-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.item-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    transition: var(--transition); /* Matches the bestseller animation speed */
+}
+
+/* Hover effect: Title turns yellow/green like bestsellers */
+.bouquet-item:hover .item-info h3 {
+    color: #E8E81C;
+}
+
+/* Ensure price and text stay dark */
+.item-info .price {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--text-dark);
+}
+
+/* Adjust the image scale to match bestseller feel */
+.bouquet-item:hover .item-image img {
+    transform: scale(1.05);
+}

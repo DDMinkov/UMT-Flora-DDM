@@ -18,7 +18,6 @@
     margin: 0;
 }
 
-/* Bouquet Grid */
 .bouquets-grid {
     display: flex;
     gap: 30px;
@@ -68,8 +67,6 @@
     color: var(--text-dark);
 }
 
-/* --- Section Specific Navigation Layout --- */
-
 .bestsellers-controls {
     display: flex;
     justify-content: space-between;
@@ -99,7 +96,6 @@
     gap: 15px;
 }
 
-/* Ensure the link covers the card area without default link styling */
 .card-link {
     text-decoration: none;
     color: inherit;
@@ -108,15 +104,13 @@
     height: 100%;
 }
 
-/* Update your existing H3 selector to include the hover effect */
 .card-info h3 {
     font-size: 20px;
     margin-bottom: 10px;
     color: var(--text-dark);
-    transition: var(--transition); /* Smooth color change */
+    transition: var(--transition);
 }
 
-/* Hover Animation: Text turns yellow like the header links */
 .bouquet-card:hover .card-info h3 {
     color: #E8E81C;
 }

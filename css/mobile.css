@@ -84,6 +84,19 @@
         display: none;
     }
 
+    .bouquets-header h2 {
+        font-size: 36px;
+    }
+
+    .bouquet-item {
+        /* 2 per row: (100% - 1 gap) / 2 */
+        flex: 0 0 calc((100% - 20px) / 2);
+    }
+    
+    .item-image {
+        height: 300px;
+    }
+
     .review-card:last-child {
         display: none;
     }
@@ -91,6 +104,15 @@
     .feedback-title {
         font-size: 32px;
         margin-bottom: 40px;
+    }
+
+    .contacts-top {
+        flex-direction: column;
+        gap: 50px;
+    }
+    
+    .contacts-image {
+        height: 400px;
     }
 
     .footer-top {
@@ -167,6 +189,22 @@
     
     .bouquets-grid {
         justify-content: center;
+    }
+
+    .bouquets-header h2 {
+        font-size: 32px;
+    }
+
+    .bouquet-item {
+        flex: 0 0 100%;
+    }
+
+    .item-image {
+        height: 350px;
+    }
+    
+    .bouquets-action .btn-primary {
+        width: 100%;
     }
 
     .review-card:nth-child(n+2) {
