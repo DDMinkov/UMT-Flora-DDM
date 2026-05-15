@@ -12,15 +12,16 @@ html {
     scroll-behavior: smooth;
 }
 
-body {
+body, h3 {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
     color: var(--text-dark);
 }
 
-h1, h2, h3 {
+h1, h2 {
     font-family: 'Hanuman', serif;
+    font-weight: normal;
 }
 
 /* Reusable Button Styles */
@@ -75,4 +76,34 @@ h1, h2, h3 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     filter: brightness(0.9);
     transition: all 0.1s ease;
+}
+
+/* Global Carousel/Control Buttons */
+.control-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid #EEEEEE;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.control-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-dark);
+}
+
+.control-btn:hover {
+    background-color: #f8f8f8;
+    border-color: #D9DBD9;
+    transform: translateY(-2px);
+}
+
+.control-btn:active {
+    transform: translateY(0);
 }

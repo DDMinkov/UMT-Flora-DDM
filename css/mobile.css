@@ -80,6 +80,19 @@
         font-size: 16px;
     }
 
+    .bouquet-card:last-child {
+        display: none;
+    }
+
+    .review-card:last-child {
+        display: none;
+    }
+    
+    .feedback-title {
+        font-size: 32px;
+        margin-bottom: 40px;
+    }
+
     .footer-top {
         flex-direction: column;
         gap: 30px;
@@ -144,17 +157,46 @@
         max-width: 100%; /* Allow text to use full width on mobile */
     }
 
+    .bestsellers-header h2 {
+        font-size: 28px;
+    }
+
+    .bouquet-card:nth-child(n+2) {
+        display: none;
+    }
+    
+    .bouquets-grid {
+        justify-content: center;
+    }
+
+    .review-card:nth-child(n+2) {
+        display: none;
+    }
+
+    .reviews-grid {
+        justify-content: center;
+    }
+
+    .feedback-title {
+        font-size: 28px;
+    }
+    
+    .review-card {
+        padding: 20px;
+        min-height: 140px;
+    }
+
     .main-footer {
         padding: 40px 0 20px 0;
     }
 
     .footer-logo svg {
-        height: 100px; /* Increased from 80px */
+        height: 100px;
     }
 
     .footer-links {
         flex-direction: column; 
-        gap: 0; /* Removing gap to control spacing via padding instead */
+        gap: 0;
     }
 
     /* Give padding between the links */
