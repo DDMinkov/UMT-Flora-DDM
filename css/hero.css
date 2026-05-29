@@ -36,3 +36,10 @@
     margin-bottom: 45px;
     max-width: 90%;
 }
+
+@media (min-resolution: 2dppx),
+       (-webkit-min-device-pixel-ratio: 2) {
+    .hero {
+        background-image: url('../images/flowerses.jpg');
+    }
+}

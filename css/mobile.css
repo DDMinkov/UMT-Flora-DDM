@@ -80,10 +80,6 @@
         font-size: 16px;
     }
 
-    .bouquet-card:last-child {
-        display: none;
-    }
-
     .bouquets-header h2 {
         font-size: 36px;
     }
@@ -95,10 +91,6 @@
     
     .item-image {
         height: 300px;
-    }
-
-    .review-card:last-child {
-        display: none;
     }
     
     .feedback-title {
@@ -127,6 +119,65 @@
 
     .footer-socials {
         justify-content: center;
+    }
+    
+    .modal {
+        max-width: 704px !important;
+        max-height: 90vh; /* Keeps the whole modal inside viewable screen bounds */
+        overflow-y: auto; /* Adds clean fallback scrollbar only if screens get tiny */
+    }
+
+    /* Standardized uniform layout padding across both variants */
+    .modal-wrapper,
+    .modal-wrapper-centered {
+        padding: 64px 32px !important;
+    }
+
+    /* Product Modal content gaps */
+    .modal-content {
+        gap: 48px;
+    }
+
+    /* Product Image bounding */
+    .modal-left {
+        height: 337px;
+        flex: 1.1;
+    }
+
+    .modal-right h2 {
+        font-size: 28px;
+        margin-bottom: 12px;
+    }
+
+    .modal-price-tag {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .modal-right p {
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+
+    /* Order Form Variant specific spacing fixes */
+    .modal-form-variant {
+        max-width: 704px !important;
+    }
+
+    .form-title {
+        font-size: 32px;
+        margin-bottom: 0;
+    }
+
+    #order-form {
+        gap: 20px; /* Snaps the input items a bit closer together */
+    }
+
+    /* Form control box dimensions bound cleanly to parent wrapper structures */
+    .textarea-field {
+        min-height: 110px;
+        max-height: 180px; 
+        resize: none; /* Fully locked down on smaller screens */
     }
 }
 
@@ -182,10 +233,6 @@
     .bestsellers-header h2 {
         font-size: 28px;
     }
-
-    .bouquet-card:nth-child(n+2) {
-        display: none;
-    }
     
     .bouquets-grid {
         justify-content: center;
@@ -205,10 +252,6 @@
     
     .bouquets-action .btn-primary {
         width: 100%;
-    }
-
-    .review-card:nth-child(n+2) {
-        display: none;
     }
 
     .reviews-grid {
@@ -245,5 +288,74 @@
     .footer-socials svg {
         width: 32px;  
         height: 32px;
+    }
+
+        .modal {
+        max-width: 704px !important;
+        max-height: 90vh; 
+        overflow-y: auto; 
+    }
+
+    /* Standardized uniform layout padding across both variants */
+    .modal-wrapper,
+    .modal-wrapper-centered {
+        padding: 64px 32px !important;
+    }
+
+    /* --- PRODUCT MODAL OPTIMIZATIONS --- */
+    
+    /* Stack components vertically to handle beefier typography scales smoothly */
+    .modal-content {
+        flex-direction: column;
+        gap: 32px; /* Clean structural gap between the image and the copy */
+    }
+
+    /* Span the image across the full width of the card framework */
+    .modal-left {
+        width: 100%;
+        height: 340px;
+        flex: none;
+    }
+
+    /* Beefed up font sizing and metric parameters */
+    .modal-right h2 {
+        font-size: 36px; /* Increased from 28px */
+        margin-bottom: 16px;
+    }
+
+    .modal-price-tag {
+        font-size: 26px; /* Increased from 22px */
+        margin-bottom: 24px;
+    }
+
+    .modal-right p {
+        font-size: 16px; /* Brought up from standard 14px body text */
+        margin-bottom: 32px;
+        line-height: 1.6;
+    }
+    
+    /* Enforce button layouts to follow the structural text grid flow cleanly */
+    .modal-actions {
+        justify-content: flex-start;
+    }
+
+    /* --- ORDER FORM MODAL (UNCHANGED & PERFECT) --- */
+    .modal-form-variant {
+        max-width: 704px !important;
+    }
+
+    .form-title {
+        font-size: 32px;
+        margin-bottom: 0;
+    }
+
+    #order-form {
+        gap: 20px; 
+    }
+
+    .textarea-field {
+        min-height: 110px;
+        max-height: 180px; 
+        resize: none; 
     }
 }

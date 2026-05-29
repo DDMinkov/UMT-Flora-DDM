@@ -1,0 +1,15 @@
+{
+  "bouquets": [
+    { "id": "1", "title": "Spring Elegance", "description": "A delicate blend of peonies, tulips, and roses — perfect for springtime gifting and bright smiles.", "price": 35, "image": "flowa1", "category": "bestseller" },
+    { "id": "2", "title": "Berry Chic", "description": "A stylish composition of roses, seasonal greenery, and vibrant berries — a bold and elegant floral statement.", "price": 40, "image": "flowa2", "category": "bestseller" },
+    { "id": "3", "title": "Lavender Dream", "description": "A rich bouquet with lavender, lisianthus, and roses — ideal for those who love deep hues and gentle fragrance.", "price": 55, "image": "flowa3", "category": "bestseller" },
+    { "id": "4", "title": "Peach Meadow", "description": "A soft and radiant arrangement of peach and blush roses with lush greenery.", "price": 55, "image": "bouquetto1", "category": "regular" },
+    { "id": "5", "title": "Blush Romance", "description": "A premium bouquet of deep pink and ivory roses, complemented by silver eucalyptus.", "price": 34, "image": "bouquetto2", "category": "regular" },
+    { "id": "6", "title": "Pastel Garden", "description": "A pastel-toned mix of spray roses and greenery in a woven basket.", "price": 40, "image": "bouquetto3", "category": "regular" },
+    { "id": "7", "title": "Tulip Charm", "description": "A vivid bouquet of bright tulips and roses in a lavender box.", "price": 61, "image": "bouquetto4", "category": "regular" },
+    { "id": "8", "title": "Berry Bloom", "description": "A lush mix of rich pink, purple, and cream blooms with textured greens.", "price": 32, "image": "bouquetto5", "category": "regular" },
+    { "id": "9", "title": "Sweet Whisper", "description": "A charming spring bouquet with peonies, roses, and lilac-toned accents.", "price": 40, "image": "bouquetto6", "category": "regular" },
+    { "id": "10", "title": "Field Joy", "description": "A rustic hand-tied bouquet of sunflowers, lisianthus, and daisies.", "price": 49, "image": "bouquetto7", "category": "regular" },
+    { "id": "11", "title": "Soft Bloom", "description": "A delicate bouquet of pink carnations and roses wrapped in satin paper.", "price": 37, "image": "bouquetto8", "category": "regular" }
+  ]
+}

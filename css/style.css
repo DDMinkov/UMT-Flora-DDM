@@ -80,6 +80,37 @@ h1, h2 {
     transition: all 0.1s ease;
 }
 
+/* Text Field */
+.text-field {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #D9DBD9;
+    outline: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-dark);
+    transition: border-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box;
+    appearance: textfield;
+    -moz-appearance: textfield;
+}
+
+.text-field:focus {
+    border-color: var(--text-dark);
+}
+
+.text-field.invalid-value {
+    border-color: #C34040 !important;
+    color: #C34040 !important;
+}
+
+.text-field::-webkit-outer-spin-button,
+.text-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 /* Global Carousel/Control Buttons */
 .control-btn {
     width: 44px;

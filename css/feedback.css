@@ -58,3 +58,22 @@
     justify-content: flex-end;
     gap: 15px;
 }
+
+.feedback-swiper {
+    width: 100%;
+    padding: 16px 20px 40px;
+    margin: -16px -20px 0;
+}
+
+.feedback-swiper .swiper-wrapper {
+    align-items: stretch;
+}
+
+.feedback-swiper .swiper-slide {
+    height: auto;
+    display: flex;
+}
+
+.review-card {
+    flex: 1;
+}

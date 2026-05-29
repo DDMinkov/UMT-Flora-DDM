@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Flora | Stunning Bouquets</title>
         <link rel="icon" type="image/png" href="images/favicon.png">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css" />
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="css/header.css">
         <link rel="stylesheet" href="css/hero.css">
@@ -14,7 +15,9 @@
         <link rel="stylesheet" href="css/feedback.css">
         <link rel="stylesheet" href="css/contacts.css">
         <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/modal.css">
         <link rel="stylesheet" href="css/mobile.css">
+        
     </head>
     <body>
         <header class="main-header">
@@ -42,7 +45,11 @@
             </div>
         </header>
         <div class="nav-overlay"></div>
-        <script src="js/script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+        <script src="js/header.js"></script>
+        <script src="js/modal.js"></script>
+        <script src="js/api.js" defer></script>
         <section class="hero">
             <div class="hero-content">
                 <h1>Brighten Your Day with Our Stunning Bouquets</h1>
@@ -61,72 +68,28 @@
                 </div>
 
                 <div class="about-image">
-                    <img src="images/florist.jpg" alt="Florist arranging white peonies">
+                    <img src="images/florist.jpg" srcset="images/florist.jpg 1x, images/florist.jpg 2x" alt="Florist arranging white peonies">
                 </div>
             </div>
         </section>
+        
         <section class="bestsellers" id="bestsellers">
             <div class="container">
                 <div class="bestsellers-header">
                     <h2>Top-Selling Bouquets</h2>
                 </div>
 
-                <div class="bouquets-grid">
-                    <div class="bouquet-card">
-                        <a href="#" class="card-link">
-                            <div class="card-image">
-                                <img src="images/flowa1.jpg" alt="Spring Elegance Bouquet">
-                            </div>
-                            <div class="card-info">
-                                <h3>Spring Elegance</h3>
-                                <p>A delicate blend of peonies, tulips, and roses — perfect for springtime gifting and bright smiles.</p>
-                                <span class="price">$35</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-card">
-                        <a href="#" class="card-link">
-                            <div class="card-image">
-                                <img src="images/flowa2.jpg" alt="Berry Chic Bouquet">
-                            </div>
-                            <div class="card-info">
-                                <h3>Berry Chic</h3>
-                                <p>A stylish composition of roses, seasonal greenery, and vibrant berries — a bold and elegant floral statement.</p>
-                                <span class="price">$40</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-card">
-                        <a href="#" class="card-link">
-                            <div class="card-image">
-                                <img src="images/flowa3.jpg" alt="Lavender Dream Bouquet">
-                            </div>
-                            <div class="card-info">
-                                <h3>Lavender Dream</h3>
-                                <p>A rich bouquet with lavender, lisianthus, and roses — ideal for those who love deep hues and gentle fragrance.</p>
-                                <span class="price">$55</span>
-                            </div>
-                        </a>
-                    </div>
+                <div class="swiper bestsellers-swiper">
+                    <div class="swiper-wrapper" id="bestsellers-container"></div>
                 </div>
 
                 <div class="bestsellers-controls">
-                    <div class="pagination-dots">
-                        <span class="dot active"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                        <span class="dot"></span>
-                    </div>
-                    
+                    <div class="swiper-pagination bestsellers-pagination"></div>
                     <div class="carousel-arrows">
-                        <button class="control-btn" aria-label="Previous">
+                        <button class="control-btn bestsellers-prev" aria-label="Previous">
                             <svg><use xlink:href="images/sprite.svg#left-arrow-alt"></use></svg>
                         </button>
-                        <button class="control-btn" aria-label="Next">
+                        <button class="control-btn bestsellers-next" aria-label="Next">
                             <svg><use xlink:href="images/sprite.svg#right-arrow-alt"></use></svg>
                         </button>
                     </div>
@@ -141,111 +104,7 @@
                     <p>Explore our stunning selection of fresh flower bouquets.</p>
                 </div>
 
-                <div class="bouquets-main-grid">
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto1.jpg" alt="Peach Meadow">
-                            </div>
-                            <div class="item-info">
-                                <h3>Peach Meadow</h3>
-                                <p>A soft and radiant arrangement of peach and blush roses with lush greenery.</p>
-                                <span class="price">$55</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto2.jpg" alt="Blush Romance">
-                            </div>
-                            <div class="item-info">
-                                <h3>Blush Romance</h3>
-                                <p>A premium bouquet of deep pink and ivory roses, complemented by silver eucalyptus.</p>
-                                <span class="price">$34</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto3.jpg" alt="Pastel Garden">
-                            </div>
-                            <div class="item-info">
-                                <h3>Pastel Garden</h3>
-                                <p>A pastel-toned mix of spray roses and greenery in a woven basket.</p>
-                                <span class="price">$40</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto4.jpg" alt="Tulip Charm">
-                            </div>
-                            <div class="item-info">
-                                <h3>Tulip Charm</h3>
-                                <p>A vivid bouquet of bright tulips and roses in a lavender box.</p>
-                                <span class="price">$61</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto5.jpg" alt="Berry Bloom">
-                            </div>
-                            <div class="item-info">
-                                <h3>Berry Bloom</h3>
-                                <p>A lush mix of rich pink, purple, and cream blooms with textured greens.</p>
-                                <span class="price">$32</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto6.jpg" alt="Sweet Whisper">
-                            </div>
-                            <div class="item-info">
-                                <h3>Sweet Whisper</h3>
-                                <p>A charming spring bouquet with peonies, roses, and lilac-toned accents.</p>
-                                <span class="price">$40</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto7.jpg" alt="Field Joy">
-                            </div>
-                            <div class="item-info">
-                                <h3>Field Joy</h3>
-                                <p>A rustic hand-tied bouquet of sunflowers, lisianthus, and daisies.</p>
-                                <span class="price">$49</span>
-                            </div>
-                        </a>
-                    </div>
-
-                    <div class="bouquet-item">
-                        <a href="#" class="item-link">
-                            <div class="item-image">
-                                <img src="images/bouquetto8.jpg" alt="Soft Bloom">
-                            </div>
-                            <div class="item-info">
-                                <h3>Soft Bloom</h3>
-                                <p>A delicate bouquet of pink carnations and roses wrapped in satin paper.</p>
-                                <span class="price">$37</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+                <div class="bouquets-main-grid" id="all-bouquets-container"></div>
 
                 <div class="bouquets-action">
                     <button class="btn-primary">Show More</button>
@@ -256,31 +115,40 @@
         <section class="feedback" id="feedback">
             <div class="feedback-container">
                 <h2 class="feedback-title">What our clients say</h2>
-                
-                <div class="reviews-grid">
-                    <div class="review-card">
-                        <p class="review-text">"Flora made my anniversary unforgettable with their beautiful arrangement!"</p>
-                        <span class="review-author">Emma T.</span>
-                    </div>
 
-                    <div class="review-card">
-                        <p class="review-text">Absolutely stunning bouquet! It looked even better than the photo and arrived right on time.</p>
-                        <span class="review-author">Daniel R.</span>
-                    </div>
-
-                    <div class="review-card">
-                        <p class="review-text">The service was exceptional, and the flowers were fresh!</p>
-                        <span class="review-author">Olivia M.</span>
+                <div class="swiper feedback-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="review-card">
+                                <p class="review-text">"Flora made my anniversary unforgettable with their beautiful arrangement!"</p>
+                                <span class="review-author">Emma T.</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="review-card">
+                                <p class="review-text">Absolutely stunning bouquet! It looked even better than the photo and arrived right on time.</p>
+                                <span class="review-author">Daniel R.</span>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="review-card">
+                                <p class="review-text">The service was exceptional, and the flowers were fresh!</p>
+                                <span class="review-author">Olivia M.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="feedback-controls">
-                    <button class="control-btn" aria-label="Previous">
-                        <svg><use xlink:href="images/sprite.svg#left-arrow-alt"></use></svg>
-                    </button>
-                    <button class="control-btn" aria-label="Next">
-                        <svg><use xlink:href="images/sprite.svg#right-arrow-alt"></use></svg>
-                    </button>
+                    <div class="swiper-pagination feedback-pagination"></div>
+                    <div class="carousel-arrows">
+                        <button class="control-btn feedback-prev" aria-label="Previous">
+                            <svg><use xlink:href="images/sprite.svg#left-arrow-alt"></use></svg>
+                        </button>
+                        <button class="control-btn feedback-next" aria-label="Next">
+                            <svg><use xlink:href="images/sprite.svg#right-arrow-alt"></use></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -318,7 +186,7 @@
                 </div>
 
                 <div class="contacts-image">
-                    <img src="images/contactflowas.jpg" alt="Florist workshop with various bouquets">
+                    <img src="images/contactflowas.jpg" srcset="images/contactflowas.jpg 1x, images/contactflowas.jpg 2x" alt="Florist workshop with various bouquets">
                 </div>
             </div>
         </section>
@@ -360,5 +228,72 @@
                 </div>
             </div>
         </footer>
+        <dialog id="product-modal" class="modal">
+            <div class="modal-wrapper">
+                <button class="modal-close-btn" aria-label="Close Modal">
+                    <svg><use xlink:href="images/sprite.svg#x"></use></svg>
+                </button>
+                <div class="modal-content">
+                    <div class="modal-left">
+                        <img id="modal-image" src="images/flowa1.jpg" alt="Spring Elegance Bouquet">
+                    </div>
+                    <div class="modal-right">
+                        <h2 id="modal-title">Spring Elegance</h2>
+                        <div id="modal-price" class="modal-price-tag">$35</div>
+                        <p id="modal-description">Each stem is carefully selected to create a bouquet that radiates freshness, elegance, and the gentle charm of spring. Whether you're celebrating a birthday, sending love, or simply brightening someone's day, this arrangement is sure to bring warm smiles and lasting impressions.</p>
+                        
+                        <div class="modal-actions">
+                            <button type="button" id="modal-buy-btn" class="btn-primary">Buy now</button>
+                            <input type="number" id="modal-quantity" class="text-field" value="1" min="1">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dialog>
+        <dialog id="order-modal" class="modal modal-form-variant">
+            <div class="modal-wrapper modal-wrapper-centered">
+                <button class="modal-close-btn" id="order-modal-close" aria-label="Close Order Modal">
+                    <svg><use xlink:href="images/sprite.svg#x"></use></svg>
+                </button>
+                
+                <h2 class="form-title">Order</h2>
+                
+                <form id="order-form" action="#" method="POST" autocomplete="on">
+                    <div class="form-group">
+                        <label for="order-name">Name*</label>
+                        <input type="text" id="order-name" name="customer-name" class="text-field" placeholder="Ann" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order-phone">Phone*</label>
+                        <input type="tel" id="order-phone" name="customer-phone" class="text-field" placeholder="+1 (555) 123-4567" inputmode="numeric" pattern="[0-9\s+\-()]*" title="Please enter a valid phone number containing only numbers and standard spacing/symbols" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order-address">Address</label>
+                        <input type="text" id="order-address" name="customer-address" class="text-field" placeholder="456 Floral Ave, Sydney NSW 2000 AU">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="order-message">Message</label>
+                        <textarea id="order-message" name="customer-message" class="text-field textarea-field" placeholder="Type your message..."></textarea>
+                    </div>
+
+                    <div class="checkbox-container">
+                        <label class="custom-checkbox-label">
+                            <input type="checkbox" id="order-agreement" name="license-agreement" class="native-checkbox" required>
+                            <span class="checkbox-box">
+                                <svg class="checkbox-icon-svg"><use xlink:href="images/sprite.svg#check"></use></svg>
+                            </span>
+                            <span class="label-text">I agree to the license agreement and privacy policy</span>
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary" id="order-submit-btn">Go to Checkout</button>
+                    </div>
+                </form>
+            </div>
+        </dialog>
     </body>
 </html>
