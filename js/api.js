@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = 'http://localhost:3000/bouquets';
+    const BASE_URL = './db.json'; 
     
     const bestsellersContainer = document.getElementById('bestsellers-container');
     const allBouquetsContainer = document.getElementById('all-bouquets-container');
@@ -9,6 +9,39 @@ document.addEventListener('DOMContentLoaded', () => {
         currentPage: 1,
         limitPerPage: 4,
         totalLoaded: 0
+    };
+
+    const localAxios = {
+        get: async (url) => {
+            const res = await fetch(BASE_URL);
+            if (!res.ok) throw new Error('Failed to load db.json');
+            const database = await res.json();
+            let items = database.bouquets || [];
+
+            const urlObj = new URL(url, window.location.origin);
+            const category = urlObj.searchParams.get('category');
+            const page = parseInt(urlObj.searchParams.get('_page'));
+            const perPage = parseInt(urlObj.searchParams.get('_per_page'));
+
+            if (category) {
+                items = items.filter(item => item.category === category);
+            }
+
+            const totalCount = items.length;
+
+            if (page && perPage) {
+                const startIndex = (page - 1) * perPage;
+                const endIndex = startIndex + perPage;
+                items = items.slice(startIndex, endIndex);
+            }
+
+            return {
+                data: items,
+                headers: {
+                    'x-total-count': totalCount
+                }
+            };
+        }
     };
 
     function createCardTemplate(item, isBestseller) {
@@ -40,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchBestsellers() {
         try {
-            const response = await axios.get(`${BASE_URL}?category=bestseller`);
+            const response = await localAxios.get(`${BASE_URL}?category=bestseller`);
             const data = response.data;
             
             if (data.length === 0) {
@@ -80,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function fetchAllBouquets(page) {
         try {
-            const response = await axios.get(`${BASE_URL}?category=regular&_page=${page}&_per_page=${state.limitPerPage}`);
+            const response = await localAxios.get(`${BASE_URL}?category=regular&_page=${page}&_per_page=${state.limitPerPage}`);
             
             const data = Array.isArray(response.data) ? response.data : response.data.data;
             
