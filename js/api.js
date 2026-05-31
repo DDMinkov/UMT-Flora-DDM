@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const bestsellersContainer = document.getElementById('bestsellers-container');
     const allBouquetsContainer = document.getElementById('all-bouquets-container');
+    const feedbackContainer = document.getElementById('feedback-container'); // Added selector
     const loadMoreBtn = document.querySelector('.bouquets-action .btn-primary');
 
     const state = {
@@ -16,9 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch(BASE_URL);
             if (!res.ok) throw new Error('Failed to load db.json');
             const database = await res.json();
-            let items = database.bouquets || [];
-
+            
             const urlObj = new URL(url, window.location.origin);
+            
+            // Check if looking for reviews or bouquets route
+            if (urlObj.pathname.includes('/reviews') || urlObj.searchParams.get('type') === 'reviews') {
+                return { data: database.reviews || [] };
+            }
+
+            let items = database.bouquets || [];
             const category = urlObj.searchParams.get('category');
             const page = parseInt(urlObj.searchParams.get('_page'));
             const perPage = parseInt(urlObj.searchParams.get('_per_page'));
@@ -55,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="#" class="${linkClass}" data-id="${item.id}">
                     <div class="${imgClass}">
                         <img src="images/${item.image}.jpg" 
-                            srcset="images/${item.image}.jpg 1x, images/${item.image}@2x.jpg 2x" 
+                            srcset="images/${item.image}.jpg 1x, images/${item.image}.jpg 2x" 
                             alt="${item.title}" 
                             loading="lazy">
                     </div>
@@ -69,6 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         return isBestseller ? `<div class="swiper-slide">${inner}</div>` : inner;
+    }
+
+    // Dynamic markup factory for reviews
+    function createReviewTemplate(review) {
+        return `
+            <div class="swiper-slide">
+                <div class="review-card">
+                    <p class="review-text">${review.text}</p>
+                    <span class="review-author">${review.author}</span>
+                </div>
+            </div>
+        `;
     }
 
     async function fetchBestsellers() {
@@ -116,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await localAxios.get(`${BASE_URL}?category=regular&_page=${page}&_per_page=${state.limitPerPage}`);
             
             const data = Array.isArray(response.data) ? response.data : response.data.data;
-            
             const totalCount = response.data.items || Number(response.headers['x-total-count']) || 8; 
 
             if (!data || data.length === 0) {
@@ -152,24 +170,43 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function initFeedbackSlider() {
-        new Swiper('.feedback-swiper', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            pagination: {
-                el: '.feedback-pagination',
-                clickable: true,
-            },
-            navigation: {
-                prevEl: '.feedback-prev',
-                nextEl: '.feedback-next',
-            },
-            breakpoints: {
-                0:    { slidesPerView: 1 },
-                851:  { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
+    async function fetchAndInitFeedback() {
+        try {
+            const response = await localAxios.get(`${BASE_URL}?type=reviews`);
+            const reviews = response.data;
+
+            if(reviews.length === 0) {
+                feedbackContainer.innerHTML = '<p class="empty-message">No feedback yet.</p>';
+                return;
             }
-        });
+
+            const markup = reviews.map(review => createReviewTemplate(review)).join('');
+            feedbackContainer.innerHTML = markup;
+
+            // Swiper runs exactly *after* content insertion to map slides appropriately
+            new Swiper('.feedback-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                observer: true, 
+                observeParents: true,
+                pagination: {
+                    el: '.feedback-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    prevEl: '.feedback-prev',
+                    nextEl: '.feedback-next',
+                },
+                breakpoints: {
+                    0:    { slidesPerView: 1 },
+                    851:  { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                }
+            });
+        } catch (error) {
+            console.error('Error fetching reviews:', error);
+            feedbackContainer.innerHTML = '<p class="error-message">Could not load client feedback.</p>';
+        }
     }
 
     loadMoreBtn.addEventListener('click', () => {
@@ -179,5 +216,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fetchBestsellers();
     fetchAllBouquets(state.currentPage);
-    initFeedbackSlider();
+    fetchAndInitFeedback(); // Replaced hardcoded initializer with active fetching
 });

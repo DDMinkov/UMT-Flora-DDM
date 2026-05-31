@@ -77,3 +77,36 @@
 .review-card {
     flex: 1;
 }
+
+.feedback-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.feedback-pagination {
+    position: static;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: auto;
+}
+
+.feedback-pagination .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background-color: #D9DBD9;
+    opacity: 1;
+    margin: 0 !important;
+    transition: var(--transition);
+}
+
+.feedback-pagination .swiper-pagination-bullet-active {
+    background-color: #030C01;
+}
+
+.feedback-controls .carousel-arrows {
+    display: flex;
+    gap: 15px;
+}

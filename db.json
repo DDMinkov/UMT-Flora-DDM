@@ -3,6 +3,8 @@
     { "id": "1", "title": "Spring Elegance", "description": "A delicate blend of peonies, tulips, and roses — perfect for springtime gifting and bright smiles.", "price": 35, "image": "flowa1", "category": "bestseller" },
     { "id": "2", "title": "Berry Chic", "description": "A stylish composition of roses, seasonal greenery, and vibrant berries — a bold and elegant floral statement.", "price": 40, "image": "flowa2", "category": "bestseller" },
     { "id": "3", "title": "Lavender Dream", "description": "A rich bouquet with lavender, lisianthus, and roses — ideal for those who love deep hues and gentle fragrance.", "price": 55, "image": "flowa3", "category": "bestseller" },
+    { "id": "12", "title": "Crimson Velvet", "description": "An opulent arrangement of deep red roses, wrapped in premium textured paper.", "price": 65, "image": "flowa4", "category": "bestseller" },
+    { "id": "13", "title": "Sunny Sorbet", "description": "A cheerful mix of yellow ranunculus, white daisies, and bright yellow spray roses to bring instant warmth.", "price": 45, "image": "flowa5", "category": "bestseller" },
     { "id": "4", "title": "Peach Meadow", "description": "A soft and radiant arrangement of peach and blush roses with lush greenery.", "price": 55, "image": "bouquetto1", "category": "regular" },
     { "id": "5", "title": "Blush Romance", "description": "A premium bouquet of deep pink and ivory roses, complemented by silver eucalyptus.", "price": 34, "image": "bouquetto2", "category": "regular" },
     { "id": "6", "title": "Pastel Garden", "description": "A pastel-toned mix of spray roses and greenery in a woven basket.", "price": 40, "image": "bouquetto3", "category": "regular" },
@@ -11,5 +13,12 @@
     { "id": "9", "title": "Sweet Whisper", "description": "A charming spring bouquet with peonies, roses, and lilac-toned accents.", "price": 40, "image": "bouquetto6", "category": "regular" },
     { "id": "10", "title": "Field Joy", "description": "A rustic hand-tied bouquet of sunflowers, lisianthus, and daisies.", "price": 49, "image": "bouquetto7", "category": "regular" },
     { "id": "11", "title": "Soft Bloom", "description": "A delicate bouquet of pink carnations and roses wrapped in satin paper.", "price": 37, "image": "bouquetto8", "category": "regular" }
+  ],
+  "reviews": [
+    { "id": "1", "text": "\"Flora made my anniversary unforgettable with their beautiful arrangement!\"", "author": "Emma T." },
+    { "id": "2", "text": "\"Absolutely stunning bouquet! It looked even better than the photo and arrived right on time.\"", "author": "Daniel R." },
+    { "id": "3", "text": "\"The service was exceptional, and the flowers were fresh!\"", "author": "Olivia M." },
+    { "id": "2", "text": "\"The deep red roses will look really beautiful at my grandma's funeral, I just know it.\"", "author": "Malick S." },
+    { "id": "2", "text": "\"To be honest, I haven't actually purchased anything from here. But the flowers here seem absolutely delightful!\"", "author": "Mario M." }
   ]
 }
