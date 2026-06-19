@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const BASE_URL = './db.json'; 
+    const RENDER_BACKEND_URL = 'https://your-render-api-service.onrender.com';
+    const BASE_URL = `${RENDER_BACKEND_URL}/api/bouquets`;
     
     const bestsellersContainer = document.getElementById('bestsellers-container');
     const allBouquetsContainer = document.getElementById('all-bouquets-container');
-    const feedbackContainer = document.getElementById('feedback-container'); // Added selector
+    const feedbackContainer = document.getElementById('feedback-container');
     const loadMoreBtn = document.querySelector('.bouquets-action .btn-primary');
 
     const state = {
@@ -14,33 +15,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const localAxios = {
         get: async (url) => {
-            const res = await fetch(BASE_URL);
-            if (!res.ok) throw new Error('Failed to load db.json');
-            const database = await res.json();
-            
+            // Check if looking for reviews
+            if (url.includes('type=reviews') || url.includes('/reviews')) {
+                const res = await fetch(`${RENDER_BACKEND_URL}/api/reviews`);
+                if (!res.ok) throw new Error('Failed to fetch reviews from database');
+                const reviewsData = await res.json();
+                return { data: reviewsData };
+            }
+
             const urlObj = new URL(url, window.location.origin);
-            
-            // Check if looking for reviews or bouquets route
-            if (urlObj.pathname.includes('/reviews') || urlObj.searchParams.get('type') === 'reviews') {
-                return { data: database.reviews || [] };
-            }
-
-            let items = database.bouquets || [];
             const category = urlObj.searchParams.get('category');
-            const page = parseInt(urlObj.searchParams.get('_page'));
-            const perPage = parseInt(urlObj.searchParams.get('_per_page'));
+            const page = urlObj.searchParams.get('_page') || 1;
+            const perPage = urlObj.searchParams.get('_per_page') || state.limitPerPage;
 
+            let targetUrl = `${BASE_URL}?page=${page}&limit=${perPage}`;
             if (category) {
-                items = items.filter(item => item.category === category);
+                targetUrl += `&category=${category}`;
             }
 
-            const totalCount = items.length;
+            const res = await fetch(targetUrl);
+            if (!res.ok) throw new Error('Failed to load bouquets from backend server');
+            const responseData = await res.json();
+            
+            // 4. Safely extract arrays whether returned as a flat layout or bundled inside object arrays
+            let items = Array.isArray(responseData) ? responseData : (responseData.data || responseData.bouquets || []);
+            
+            // 5. Normalizes DB properties back to item.image so your templates keep loading perfectly
+            items = items.map(item => ({
+                ...item,
+                image: item.image || (item.photoURL ? item.photoURL.replace('images/', '').replace('.jpg', '') : 'flowa1')
+            }));
 
-            if (page && perPage) {
-                const startIndex = (page - 1) * perPage;
-                const endIndex = startIndex + perPage;
-                items = items.slice(startIndex, endIndex);
-            }
+            const totalCount = responseData.total || Number(res.headers.get('x-total-count')) || 12;
 
             return {
                 data: items,
