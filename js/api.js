@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const RENDER_BACKEND_URL = 'https://your-render-api-service.onrender.com';
+    const RENDER_BACKEND_URL = 'https://umt-flora-ddm.onrender.com';
     const BASE_URL = `${RENDER_BACKEND_URL}/api/bouquets`;
     
     const bestsellersContainer = document.getElementById('bestsellers-container');
