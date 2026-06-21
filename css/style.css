@@ -142,3 +142,30 @@ h1, h2 {
     border-color: #68D04C;
     transform: translateY(0);
 }
+
+/* CSS Spinner Loader */
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #EEEEEE;
+    border-bottom-color: #42ED13;
+    border-radius: 50%;
+    display: block;
+    margin: 30px auto;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Стилізація неактивних стрілок Swiper */
+.control-btn.swiper-button-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: not-allowed;
+    background-color: #ffffff;
+    border-color: #EEEEEE;
+}

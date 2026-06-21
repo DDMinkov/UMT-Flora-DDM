@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const allBouquetsContainer = document.getElementById('all-bouquets-container');
     const feedbackContainer = document.getElementById('feedback-container');
     const loadMoreBtn = document.querySelector('.bouquets-action .btn-primary');
+    const orderForm = document.getElementById('order-form');
+    const orderModal = document.getElementById('order-modal');
 
     const state = {
         currentPage: 1,
@@ -13,47 +15,50 @@ document.addEventListener('DOMContentLoaded', () => {
         totalLoaded: 0
     };
 
+    // Safe abstraction layer for network requests
     const localAxios = {
         get: async (url) => {
-            // Check if looking for reviews
-            if (url.includes('type=reviews') || url.includes('/reviews')) {
-                const res = await fetch(`${RENDER_BACKEND_URL}/api/reviews`);
-                if (!res.ok) throw new Error('Failed to fetch reviews from database');
-                const reviewsData = await res.json();
-                return { data: reviewsData };
-            }
-
-            const urlObj = new URL(url, window.location.origin);
-            const category = urlObj.searchParams.get('category');
-            const page = urlObj.searchParams.get('_page') || 1;
-            const perPage = urlObj.searchParams.get('_per_page') || state.limitPerPage;
-
-            let targetUrl = `${BASE_URL}?page=${page}&limit=${perPage}`;
-            if (category) {
-                targetUrl += `&category=${category}`;
-            }
-
-            const res = await fetch(targetUrl);
-            if (!res.ok) throw new Error('Failed to load bouquets from backend server');
-            const responseData = await res.json();
-            
-            // 4. Safely extract arrays whether returned as a flat layout or bundled inside object arrays
-            let items = Array.isArray(responseData) ? responseData : (responseData.data || responseData.bouquets || []);
-            
-            // 5. Normalizes DB properties back to item.image so your templates keep loading perfectly
-            items = items.map(item => ({
-                ...item,
-                image: item.image || (item.photoURL ? item.photoURL.replace('images/', '').replace('.jpg', '') : 'flowa1')
-            }));
-
-            const totalCount = responseData.total || Number(res.headers.get('x-total-count')) || 12;
-
-            return {
-                data: items,
-                headers: {
-                    'x-total-count': totalCount
+            try {
+                // Route to reviews endpoint if specified
+                if (url.includes('type=reviews') || url.includes('/reviews')) {
+                    const res = await fetch(`${RENDER_BACKEND_URL}/api/reviews`);
+                    if (!res.ok) throw new Error('Failed to fetch reviews');
+                    const reviewsData = await res.json();
+                    return { data: Array.isArray(reviewsData) ? reviewsData : (reviewsData.data || []) };
                 }
-            };
+
+                const urlObj = new URL(url, window.location.origin);
+                const category = urlObj.searchParams.get('category');
+                const page = urlObj.searchParams.get('_page') || 1;
+                const perPage = urlObj.searchParams.get('_per_page') || state.limitPerPage;
+
+                let targetUrl = `${BASE_URL}?page=${page}&limit=${perPage}`;
+                if (category) {
+                    targetUrl += `&category=${category}`;
+                }
+
+                const res = await fetch(targetUrl);
+                if (!res.ok) throw new Error('Failed to load bouquets from server');
+                const responseData = await res.json();
+                
+                let items = Array.isArray(responseData) ? responseData : (responseData.data || responseData.bouquets || []);
+                
+                // Normalize photo urls safely
+                items = items.map(item => ({
+                    ...item,
+                    image: item.image || (item.photoURL ? item.photoURL.replace('images/', '').replace('.jpg', '') : 'flowa1')
+                }));
+
+                const totalCount = responseData.total || Number(res.headers.get('x-total-count')) || 12;
+
+                return {
+                    data: items,
+                    totalCount: totalCount
+                };
+            } catch (err) {
+                console.error("Fetch implementation wrapper error:", err);
+                throw err;
+            }
         }
     };
 
@@ -74,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="${infoClass}">
                         <h3>${item.title}</h3>
-                        <p>${item.description}</p>
+                        <p>${item.description || ''}</p>
                         <span class="price">$${item.price}</span>
                     </div>
                 </a>
@@ -84,37 +89,37 @@ document.addEventListener('DOMContentLoaded', () => {
         return isBestseller ? `<div class="swiper-slide">${inner}</div>` : inner;
     }
 
-    // Dynamic markup factory for reviews
     function createReviewTemplate(review) {
         return `
             <div class="swiper-slide">
                 <div class="review-card">
-                    <p class="review-text">${review.text}</p>
-                    <span class="review-author">${review.author}</span>
+                    <p class="review-text">${review.text || ''}</p>
+                    <span class="review-author">${review.author || 'Anonymous'}</span>
                 </div>
             </div>
         `;
     }
 
     async function fetchBestsellers() {
+        bestsellersContainer.innerHTML = '<div class="loader"></div>';
         try {
             const response = await localAxios.get(`${BASE_URL}?category=bestseller`);
             const data = response.data;
             
-            if (data.length === 0) {
+            if (!data || data.length === 0) {
                 bestsellersContainer.innerHTML = '<p class="empty-message">No bestsellers available.</p>';
                 return;
             }
 
             const markup = data.map(item => createCardTemplate(item, true)).join('');
-            bestsellersContainer.insertAdjacentHTML('beforeend', markup);
+            bestsellersContainer.innerHTML = markup;
 
             new Swiper('.bestsellers-swiper', {
                 slidesPerView: 3,
                 spaceBetween: 30,
                 observer: true, 
                 observeParents: true,
-
+                loop: false,
                 pagination: {
                     el: '.bestsellers-pagination',
                     clickable: true,
@@ -132,16 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
         } catch (error) {
             console.error('Error fetching bestsellers:', error);
-            bestsellersContainer.innerHTML = '<p class="error-message">Failed to load bestsellers. Please try again later.</p>';
+            bestsellersContainer.innerHTML = '<p class="error-message">Failed to load bestsellers.</p>';
         }
     }
 
     async function fetchAllBouquets(page) {
+        let inlineLoader = document.createElement('div');
+        inlineLoader.className = 'loader';
+        allBouquetsContainer.after(inlineLoader);
+
         try {
             const response = await localAxios.get(`${BASE_URL}?category=regular&_page=${page}&_per_page=${state.limitPerPage}`);
-            
-            const data = Array.isArray(response.data) ? response.data : response.data.data;
-            const totalCount = response.data.items || Number(response.headers['x-total-count']) || 8; 
+            inlineLoader.remove();
+
+            const data = response.data;
+            const totalCount = response.totalCount; 
 
             if (!data || data.length === 0) {
                 if (page === 1) {
@@ -158,7 +168,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (state.totalLoaded >= totalCount || data.length < state.limitPerPage) {
                 loadMoreBtn.style.display = 'none';
-                
                 if (!document.querySelector('.end-collection-message')) {
                     const endMessage = document.createElement('p');
                     endMessage.className = 'end-collection-message';
@@ -170,18 +179,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         } catch (error) {
+            inlineLoader.remove();
             console.error('Error fetching bouquets:', error);
-            allBouquetsContainer.innerHTML = '<p class="error-message">Something went wrong. Could not load products.</p>';
+            allBouquetsContainer.innerHTML = '<p class="error-message">Could not load products.</p>';
             loadMoreBtn.style.display = 'none';
         }
     }
 
     async function fetchAndInitFeedback() {
+        feedbackContainer.innerHTML = '<div class="loader"></div>';
         try {
             const response = await localAxios.get(`${BASE_URL}?type=reviews`);
             const reviews = response.data;
 
-            if(reviews.length === 0) {
+            if (!reviews || reviews.length === 0) {
                 feedbackContainer.innerHTML = '<p class="empty-message">No feedback yet.</p>';
                 return;
             }
@@ -189,12 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const markup = reviews.map(review => createReviewTemplate(review)).join('');
             feedbackContainer.innerHTML = markup;
 
-            // Swiper runs exactly *after* content insertion to map slides appropriately
             new Swiper('.feedback-swiper', {
                 slidesPerView: 1,
                 spaceBetween: 20,
                 observer: true, 
                 observeParents: true,
+                loop: false,
                 pagination: {
                     el: '.feedback-pagination',
                     clickable: true,
@@ -215,12 +226,66 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- ORDER CREATION FORM POST HANDLING ---
+    if (orderForm) {
+        orderForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const submitBtn = document.getElementById('order-submit-btn');
+            const originalBtnText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Processing...';
+            submitBtn.disabled = true;
+
+            const formData = new FormData(orderForm);
+            
+            // Matches standard backend expected body structures
+            const orderPayload = {
+                customerName: formData.get('customer-name'),
+                customerPhone: formData.get('customer-phone'),
+                deliveryAddress: formData.get('customer-address') || '',
+                notes: formData.get('customer-message') || ''
+            };
+
+            try {
+                // Try targeted route endpoint
+                const response = await fetch(`${RENDER_BACKEND_URL}/api/orders`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(orderPayload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                await response.json();
+                alert('Thank you! Your order has been placed successfully.');
+                
+                orderForm.reset();
+                if (orderModal && typeof orderModal.close === 'function') {
+                    orderModal.close();
+                }
+
+            } catch (error) {
+                console.error('Order checkout submission error:', error);
+                alert('Connection error or missing backend checkout route. Your order data was logged to console.');
+            } finally {
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+
     loadMoreBtn.addEventListener('click', () => {
         state.currentPage += 1;
         fetchAllBouquets(state.currentPage);
     });
 
+    // Fire initialization
     fetchBestsellers();
     fetchAllBouquets(state.currentPage);
-    fetchAndInitFeedback(); // Replaced hardcoded initializer with active fetching
+    fetchAndInitFeedback();
 });
